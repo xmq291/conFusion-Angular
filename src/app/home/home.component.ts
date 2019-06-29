@@ -23,13 +23,15 @@ import { flyInOut, expand } from '../animations/app.animation';
 export class HomeComponent implements OnInit {
 
   dish: Dish;
-  dishErrMess: string;
   promotion: Promotion;
   leader: Leader;
+  dishErrMess: string;
+  promoErrMess: string;
+  leaderErrMess: string;
 
   constructor(private dishService: DishService,
     private promotionService: PromotionService,
-    private LeaderService: LeaderService,
+    private leaderService: LeaderService,
     @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
@@ -37,9 +39,11 @@ export class HomeComponent implements OnInit {
       .subscribe(dish => this.dish = dish, 
         errmess => this.dishErrMess = <any>errmess);
     this.promotionService.getFeaturedPromotion()
-      .subscribe(promotion => this.promotion = promotion);
-    this.LeaderService.getFeaturedLeader()
-      .subscribe(leader => this.leader = leader);
+      .subscribe(promotion => this.promotion = promotion,
+        errmess => this.promoErrMess = <any>errmess);
+    this.leaderService.getFeaturedLeader()
+      .subscribe(leader => this.leader = leader,
+        errmess => this.leaderErrMess = <any>errmess);
   }
 
 }
